@@ -5,7 +5,7 @@ import {Link} from "react-router-dom";
 function LoginItem(props) {
     return (
         <li style={{float: 'right'}}>
-            <Link to={props.href} class="active">Log in</Link>
+            <Link to={props.href} className="active">Log in</Link>
         </li>
     );
 }
