@@ -8,7 +8,8 @@ class Methods extends React.Component {
         this.state = {
             error: null,
             isLoaded: false,
-            items: []
+            items: [],
+            methodId: "none"
         };
     }
 
@@ -20,6 +21,14 @@ class Methods extends React.Component {
                     this.setState({
                         isLoaded: true,
                         items: result.methods
+                            .sort(
+                                function (a, b) {
+                                    if (a.title.substring(0, a.title.lastIndexOf(" ")) === b.title.substring(0, b.title.lastIndexOf(" "))) {
+                                        return a.stage - b.stage;
+                                    }
+                                    return a.title > b.title ? 1 : -1;
+                                }
+                            )
                     });
                 },
                 (error) => {
@@ -31,8 +40,14 @@ class Methods extends React.Component {
             )
     }
 
+    openMethod(id) {
+        this.setState({
+            methodId: id
+        })
+    }
+
     render() {
-        const { error, isLoaded, items } = this.state;
+        const {error, isLoaded, items} = this.state;
         if (error) {
             return <div>Error: {error.message}</div>;
         } else if (!isLoaded) {
@@ -40,21 +55,25 @@ class Methods extends React.Component {
         } else {
             console.log(items)
             return (
-                <table>
-                    <tr>
-                        <th>Title</th>
-                        <th>Bells</th>
-                        <th>Classification</th>
-                    </tr>
+                <div>
+                    <h1>{this.state.methodId}</h1>
+                    <table>
+                        <tr>
+                            <th>Title</th>
+                            <th>Bells</th>
+                            <th>Classification</th>
+                        </tr>
                         {items.map(item => (
                             <MethodEntree
                                 methodId={item.methodId}
                                 title={item.title}
                                 stage={item.stage}
                                 classification={item.classification}
+                                onClick={id => this.openMethod(id)}
                             />
                         ))}
-                </table>
+                    </table>
+                </div>
             );
         }
     }
