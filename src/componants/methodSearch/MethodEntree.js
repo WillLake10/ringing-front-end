@@ -3,10 +3,10 @@ import "./MethodSearch.css"
 
 function MethodEntree(props) {
     return (
-        <tr key={props.methodId} onClick={() => props.onClick(props.methodId)}>
-            <td>{props.title}</td>
-            <td>{props.stage}</td>
-            <td>{props.classification}</td>
+        <tr key={props.item.methodId} onClick={() => props.onClick(props.item.methodId)}>
+            <td>{props.item.title}</td>
+            <td>{props.item.stage}</td>
+            <td>{props.item.classification}</td>
         </tr>
     );
 }

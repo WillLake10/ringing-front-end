@@ -1,6 +1,7 @@
 import React from 'react';
 import MethodEntree from "../componants/methodSearch/MethodEntree";
 import "../componants/methodSearch/MethodSearch.css"
+import Search from "../componants/methodSearch/Search";
 
 class Methods extends React.Component {
     constructor(props) {
@@ -9,7 +10,10 @@ class Methods extends React.Component {
             error: null,
             isLoaded: false,
             items: [],
-            methodId: "none"
+            methodId: "none",
+            methodFiltered: [],
+            query: "",
+            initialLoad: false
         };
     }
 
@@ -20,7 +24,7 @@ class Methods extends React.Component {
                 (result) => {
                     this.setState({
                         isLoaded: true,
-                        items: result.methods
+                        items: result
                             .sort(
                                 function (a, b) {
                                     if (a.title.substring(0, a.title.lastIndexOf(" ")) === b.title.substring(0, b.title.lastIndexOf(" "))) {
@@ -38,12 +42,24 @@ class Methods extends React.Component {
                     });
                 }
             )
+        this.setState({
+            methodFiltered: this.state.items
+        })
     }
 
     openMethod(id) {
         this.setState({
             methodId: id
         })
+    }
+
+    queryChange(query) {
+        console.log(query)
+        this.setState({
+            query: query,
+            methodFiltered: this.state.items.filter(v => v.title.toLowerCase().includes(query))
+        })
+        console.log(this.state.query)
     }
 
     render() {
@@ -53,9 +69,18 @@ class Methods extends React.Component {
         } else if (!isLoaded) {
             return <div>Loading...</div>;
         } else {
+            if (this.state.initialLoad === false && this.state.methodFiltered.length === 0){
+                this.setState({
+                    methodFiltered: this.state.items,
+                    initialLoad: true
+                })
+            }
             console.log(items)
             return (
                 <div>
+                    <Search
+                        onChange={query => this.queryChange(query)}
+                    />
                     <h1>{this.state.methodId}</h1>
                     <table>
                         <tr>
@@ -63,12 +88,9 @@ class Methods extends React.Component {
                             <th>Bells</th>
                             <th>Classification</th>
                         </tr>
-                        {items.map(item => (
+                        {this.state.methodFiltered.map(item => (
                             <MethodEntree
-                                methodId={item.methodId}
-                                title={item.title}
-                                stage={item.stage}
-                                classification={item.classification}
+                                item={item}
                                 onClick={id => this.openMethod(id)}
                             />
                         ))}
