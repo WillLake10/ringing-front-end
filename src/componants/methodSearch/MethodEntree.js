@@ -1,5 +1,5 @@
 import React from 'react';
-import "./MethodSearch.css"
+import "./MethodEntree.css"
 
 function MethodEntree(props) {
     return (

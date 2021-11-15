@@ -1,7 +1,7 @@
 import React from 'react';
 import MethodEntree from "../componants/methodSearch/MethodEntree";
 import "../componants/methodSearch/MethodSearch.css"
-import Search from "../componants/methodSearch/Search";
+import MethodSearch from "../componants/methodSearch/MethodSearch";
 
 class Methods extends React.Component {
     constructor(props) {
@@ -78,10 +78,10 @@ class Methods extends React.Component {
             console.log(items)
             return (
                 <div>
-                    <Search
+                    <MethodSearch
                         onChange={query => this.queryChange(query)}
                     />
-                    <h1>{this.state.methodId}</h1>
+                    {/*<h1>{this.state.methodId}</h1>*/}
                     <table>
                         <tr>
                             <th>Title</th>
