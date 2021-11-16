@@ -69,7 +69,7 @@ class Methods extends React.Component {
         } else if (!isLoaded) {
             return <div>Loading...</div>;
         } else {
-            if (this.state.initialLoad === false && this.state.methodFiltered.length === 0){
+            if (this.state.initialLoad === false && this.state.methodFiltered.length === 0) {
                 this.setState({
                     methodFiltered: this.state.items,
                     initialLoad: true

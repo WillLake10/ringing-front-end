@@ -9,7 +9,7 @@ const Navbar = () => {
             <div className='navbar'>
                 <ul className="navbar">
                     <NavbarItem href={'/'} name={'Home'}/>
-                    <NavbarItem href={'/methods'} name={'Methods'}/>
+                    <NavbarItem href={'/method/search'} name={'Methods'}/>
                     <NavbarItem href={'/towers'} name={'Towers'}/>
                     <NavbarItem href={'/performances'} name={'Performances'}/>
                     <LoginItem href={'/login'} name={'Log In'}/>
