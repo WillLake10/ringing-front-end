@@ -58,14 +58,18 @@ class Blueline extends React.Component {
             let lastRow = this.props.positions.plainCourse[this.props.positions.plainCourse.length-1].rows[this.props.method.lengthOfLead-1]
             console.log(lastRow)
             const leadsPerCol = () => {
-                if (stage <= 8) {
-                    return 1
-                } else {
-                    return 2
-                }
+                let colPerPageRem = this.state.width % columnSpace
+                let colPerPage = (this.state.width - colPerPageRem) / columnSpace
+                let out = Math.ceil(this.props.positions.plainCourse.length / colPerPage)
+                console.log("w: " + this.state.width)
+                console.log(columnSpace)
+                console.log(colPerPageRem)
+                console.log(colPerPage)
+                console.log(out)
+                return out
             }
             return (
-                <svg width="75%" height={rowHeight * leadsPerCol() * (this.props.method.lengthOfLead+2) }>
+                <svg width="100%" height={rowHeight * leadsPerCol() * (this.props.method.lengthOfLead+2) }>
                     {this.props.positions.plainCourse.map(
                         lead => {
                             if (k === leadsPerCol()) {
