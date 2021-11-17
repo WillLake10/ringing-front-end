@@ -1,11 +1,13 @@
 import React from 'react';
+import Blueline from "../componants/blueline/Blueline"
 
 class Method extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             error: null,
-            isLoaded: false,
+            plainIsLoaded: false,
+            methodIsLoaded: false,
             methodId: this.props.location.pathname.replace("/method/", "")
         }
     }
@@ -16,8 +18,25 @@ class Method extends React.Component {
             .then(
                 (result) => {
                     this.setState({
-                        isLoaded: true,
+                        methodIsLoaded: true,
                         method:result
+                    })
+                    console.log(result)
+                },
+                (error) => {
+                    this.setState({
+                        isLoaded: true,
+                        error
+                    });
+                }
+            )
+        fetch("/methods/" + this.state.methodId + "/plain")
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    this.setState({
+                        plainIsLoaded: true,
+                        methodPlain:result
                     })
                     console.log(result)
                 },
@@ -31,18 +50,19 @@ class Method extends React.Component {
     }
 
     render() {
-        const {error, isLoaded, method} = this.state;
+        const {error, methodIsLoaded, plainIsLoaded, method} = this.state;
         if (error) {
             return <div>Error: {error.message}</div>;
-        } else if (!isLoaded) {
+        } else if (!methodIsLoaded || !plainIsLoaded) {
             return <div>Loading...</div>;
         } else {
             return (
                 <div>
-                    <h3>Method {this.state.methodId}</h3>
-                    <p>
+                    {/*<h3>Method {this.state.methodId}</h3>*/}
+                    <h2>
                         {method.title}
-                    </p>
+                    </h2>
+                    <Blueline positions={this.state.methodPlain} method={this.state.method} />
                 </div>
             );
         }
