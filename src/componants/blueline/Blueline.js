@@ -102,14 +102,6 @@ class Blueline extends React.Component {
                         return (
                             <>
                                 <TopLine lastRow={lastRow} values={values} col={col} rowNum={rowNum}/>
-                                <circle
-                                    cx={values.columnPad + col + ((1.35 + values.stage) * values.columnWidth) - 3}
-                                    cy={values.rowPad + ((rowNum + 0.95) * values.rowHeight) - (values.rowHeight * 1.3)}
-                                    r={(values.rowHeight) / 2}
-                                    stroke={"blue"}
-                                    strokeWidth={"2"}
-                                    fill={"none"}
-                                />
                                 <BellStart values={values} rowNum={rowNum} col={col} lastRow={lastRow}/>
                                 {lead.rows.map(row => {
                                     lastRow = row
