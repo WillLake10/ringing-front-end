@@ -1,6 +1,7 @@
 import React from "react";
 import Bell from "./Bell"
 import TopLine from "./TopLine";
+import Notation from "./Notation"
 
 class Blueline extends React.Component {
     constructor(props) {
@@ -59,13 +60,11 @@ class Blueline extends React.Component {
             let lastB = ""
             let lastT2 = ""
             let lastB2 = ""
-            let changeRow = 0
             let lastRow = this.props.positions.plainCourse[this.props.positions.plainCourse.length - 1].rows[this.props.method.lengthOfLead - 1]
             const leadsPerCol = () => {
                 let colPerPageRem = this.state.width % columnSpace
                 let colPerPage = (this.state.width - colPerPageRem) / columnSpace
-                let out = Math.ceil(this.props.positions.plainCourse.length / colPerPage)
-                return out
+                return Math.ceil(this.props.positions.plainCourse.length / colPerPage)
             }
             return (
                 <svg width="100%" height={rowHeight * leadsPerCol() * (this.props.method.lengthOfLead + 3)}>
@@ -177,17 +176,20 @@ class Blueline extends React.Component {
                                             )
                                         }
                                     )}
+                                    {/*Leadend Line*/}
                                     <polyline
                                         points={(columnPad + col) + ", " + (rowPad + (rowNum * rowHeight) - rowHeight + 3) + " " + (columnPad + col + (stage * columnWidth)) + ", " + (rowPad + (rowNum * rowHeight) - rowHeight + 3)}
                                         stroke={"black"}
                                         strokeWidth={"2"}
                                     />
+                                    {/*Treble Line*/}
                                     <polyline
                                         points={treble}
                                         stroke={"Red"}
                                         strokeWidth={"2"}
                                         fill={"none"}
                                     />
+                                    {/*2nd Line*/}
                                     <polyline
                                         points={blue}
                                         stroke={"Blue"}
@@ -198,18 +200,13 @@ class Blueline extends React.Component {
                             )
                         }
                     )}
-                    {
-                        this.props.method.notation.split(".").map(
-                            change => {
-                                changeRow++
-                                let y = rowPad + (changeRow * rowHeight) + ((rowHeight)/3)
-                                let x = columnPad - (columnWidth/2)
-                                return (
-                                    <text x={x} y={y} textAnchor={"end"} fontSize={(2 * rowHeight) / 3} fill={"#999999"}>{change}</text>
-                                )
-                            }
-                        )
-                    }
+                    <Notation
+                        rowPad={rowPad}
+                        rowHeight={rowHeight}
+                        columnPad={columnPad}
+                        columnWidth={columnWidth}
+                        method={this.props.method}
+                    />
                 </svg>
             )
         }
