@@ -20,11 +20,11 @@ function TopLine(props) {
                         )
                     }
                 )}
-                <polyline
-                    points={props.x1 + ", " + props.y1 + " " + props.x2 + ", " + props.y2}
-                    stroke={"black"}
-                    strokeWidth={"2"}
-                />
+                {/*<polyline*/}
+                {/*    points={props.x1 + ", " + props.y + " " + props.x2 + ", " + props.y}*/}
+                {/*    stroke={"black"}*/}
+                {/*    strokeWidth={"2"}*/}
+                {/*/>*/}
             </>
         )
     }
@@ -32,15 +32,3 @@ function TopLine(props) {
 }
 
 export default TopLine
-
-// x1={columnPad + col}
-// y1={rowPad + ((rowNum+1) * rowHeight) - rowHeight + 3}
-// x2={columnPad + col + (stage * columnWidth)}
-// y2={rowPad + ((rowNum+1) * rowHeight) - rowHeight + 3}
-// rowNum={rowNum}
-// lastRow={lastRow}
-// rowPad={rowPad}
-// rowHeight={rowHeight}
-// columnPad={columnPad}
-// col={col}
-// columnWidth={columnWidth}

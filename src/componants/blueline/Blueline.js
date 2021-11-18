@@ -47,29 +47,27 @@ class Blueline extends React.Component {
             const rowHeight = 17
             const columnWidth = 10
             const rowPad = 20
-            const columnPad = 20
+            const columnPad = 40
             let j = 1
             let rowNum = 1
-            let columnSpace = (stage * columnWidth) + 20
+            let columnSpace = (stage * columnWidth) + 30
             let col = 0
             let k = 0
             let treble = ""
             let blue = ""
-            let lastRow = this.props.positions.plainCourse[this.props.positions.plainCourse.length-1].rows[this.props.method.lengthOfLead-1]
-            console.log(lastRow)
+            let lastT = ""
+            let lastB = ""
+            let lastT2 = ""
+            let lastB2 = ""
+            let lastRow = this.props.positions.plainCourse[this.props.positions.plainCourse.length - 1].rows[this.props.method.lengthOfLead - 1]
             const leadsPerCol = () => {
                 let colPerPageRem = this.state.width % columnSpace
                 let colPerPage = (this.state.width - colPerPageRem) / columnSpace
                 let out = Math.ceil(this.props.positions.plainCourse.length / colPerPage)
-                console.log("w: " + this.state.width)
-                console.log(columnSpace)
-                console.log(colPerPageRem)
-                console.log(colPerPage)
-                console.log(out)
                 return out
             }
             return (
-                <svg width="100%" height={rowHeight * leadsPerCol() * (this.props.method.lengthOfLead+2) }>
+                <svg width="100%" height={rowHeight * leadsPerCol() * (this.props.method.lengthOfLead + 3)}>
                     {this.props.positions.plainCourse.map(
                         lead => {
                             if (k === leadsPerCol()) {
@@ -77,15 +75,17 @@ class Blueline extends React.Component {
                                 col = columnSpace * j
                                 j++
                                 k = 0
+                                lastB2 = ""
+                                lastT2 = ""
                             }
                             k++
                             lastRow.row.map(
                                 bell => {
                                     if (bell.bellNum === 1) {
-                                        treble = (columnPad + col + (bell.bellPos * columnWidth) + columnWidth / 2) + ", " + (rowPad + (rowNum * rowHeight) - rowHeight / 3) + " "
+                                        treble = lastT2 + (columnPad + col + (bell.bellPos * columnWidth) + columnWidth / 2) + ", " + (rowPad + (rowNum * rowHeight) - rowHeight / 3) + " "
                                     }
                                     if (bell.bellNum === 2) {
-                                        blue = (columnPad + col + (bell.bellPos * columnWidth) + columnWidth / 2) + ", " + (rowPad + (rowNum * rowHeight) - rowHeight / 3) + " "
+                                        blue = lastB2 + (columnPad + col + (bell.bellPos * columnWidth) + columnWidth / 2) + ", " + (rowPad + (rowNum * rowHeight) - rowHeight / 3) + " "
                                     }
                                     return null
                                 }
@@ -94,9 +94,8 @@ class Blueline extends React.Component {
                                 <>
                                     <TopLine
                                         x1={columnPad + col}
-                                        y1={rowPad + ((rowNum+1) * rowHeight) - rowHeight + 3}
                                         x2={columnPad + col + (stage * columnWidth)}
-                                        y2={rowPad + ((rowNum+1) * rowHeight) - rowHeight + 3}
+                                        y={rowPad + ((rowNum + 1) * rowHeight) - rowHeight + 3}
                                         rowNum={rowNum}
                                         lastRow={lastRow}
                                         rowPad={rowPad}
@@ -105,6 +104,44 @@ class Blueline extends React.Component {
                                         col={col}
                                         columnWidth={columnWidth}
                                     />
+                                    <circle
+                                        cx={columnPad + col + ((1.35 + stage) * columnWidth)-3}
+                                        cy={rowPad + ((rowNum + 0.95) * rowHeight) - (rowHeight*1.3)}
+                                        r={(rowHeight) / 2}
+                                        stroke={"blue"}
+                                        strokeWidth={"2"}
+                                        fill={"none"}
+                                    />
+                                    <text
+                                        x={columnPad + col + ((1+stage) * columnWidth)-3}
+                                        y={rowPad + (rowNum * rowHeight) - ((rowHeight)/10)}
+                                        fontSize={(2*rowHeight) / 3}
+                                    >
+                                        {lastRow.row.map(
+                                            bell => {
+                                                if (bell.bellNum === 2){
+                                                    if (bell.bellPos < 9) {
+                                                        return bell.bellPos + 1
+                                                    } else if (bell.bellPos === 9){
+                                                        return "0"
+                                                    }else if (bell.bellPos === 10){
+                                                        return "E"
+                                                    }else if (bell.bellPos === 11){
+                                                        return "T"
+                                                    }else if (bell.bellPos === 12){
+                                                        return "A"
+                                                    }else if (bell.bellPos === 13){
+                                                        return "B"
+                                                    }else if (bell.bellPos === 14){
+                                                        return "C"
+                                                    }else if (bell.bellPos === 15){
+                                                        return "D"
+                                                    }
+                                                }
+                                                return null
+                                            }
+                                        )}
+                                    </text>
                                     {lead.rows.map(
                                         row => {
                                             lastRow = row
@@ -113,10 +150,14 @@ class Blueline extends React.Component {
                                                 row.row.map(
                                                     bell => {
                                                         if (bell.bellNum === 1) {
-                                                            treble = treble + (columnPad + col + (bell.bellPos * columnWidth) + columnWidth / 2) + ", " + (rowPad + (rowNum * rowHeight) - rowHeight / 3) + " "
+                                                            lastT2 = lastT
+                                                            lastT = (columnPad + col + (bell.bellPos * columnWidth) + columnWidth / 2) + ", " + (rowPad + (rowNum * rowHeight) - rowHeight / 3) + " "
+                                                            treble = treble + lastT
                                                         }
                                                         if (bell.bellNum === 2) {
-                                                            blue = blue + (columnPad + col + (bell.bellPos * columnWidth) + columnWidth / 2) + ", " + (rowPad + (rowNum * rowHeight) - rowHeight / 3) + " "
+                                                            lastB2 = lastB
+                                                            lastB = (columnPad + col + (bell.bellPos * columnWidth) + columnWidth / 2) + ", " + (rowPad + (rowNum * rowHeight) - rowHeight / 3) + " "
+                                                            blue = blue + lastB
                                                         }
                                                         return (
                                                             <Bell
@@ -148,7 +189,7 @@ class Blueline extends React.Component {
                                     <polyline
                                         points={blue}
                                         stroke={"Blue"}
-                                        strokeWidth={"2"}
+                                        strokeWidth={"4"}
                                         fill={"none"}
                                     />
                                 </>
@@ -162,15 +203,3 @@ class Blueline extends React.Component {
 }
 
 export default Blueline;
-
-// <>
-// <Row
-//     bell={bell}
-//     rowPad={rowPad}
-//     rowNum={rowNum}
-//     rowHeight={rowHeight}
-//     columnPad={columnPad}
-//     col={col}
-//     columnWidth={columnWidth}
-// />
-// </>

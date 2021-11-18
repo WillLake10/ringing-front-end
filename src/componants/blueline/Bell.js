@@ -6,11 +6,11 @@ function Bell(props)  {
     let b = props.bell.bell
     if (props.bell.bellNum === 1) {
         return (
-            <text x={x} y={y} fill={"red"} />
+            <text x={x} y={y} />
         )
     } else if (props.bell.bellNum === 2) {
         return (
-            <text x={x} y={y} fill="blue" />
+            <text x={x} y={y} />
         )
     } else {
         return (
