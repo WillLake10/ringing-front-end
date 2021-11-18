@@ -7,10 +7,10 @@ function Notation(props) {
             {props.method.notation.split(".").map(
                 change => {
                     changeRow++
-                    let y = props.rowPad + (changeRow * props.rowHeight) + ((props.rowHeight)/3)
-                    let x = props.columnPad - (props.columnWidth/2)
+                    let y = props.values.rowPad + (changeRow * props.values.rowHeight) + ((props.values.rowHeight)/3)
+                    let x = props.values.columnPad - (props.values.columnWidth/2)
                     return (
-                        <text x={x} y={y} textAnchor={"end"} fontSize={(2 * props.rowHeight) / 3} fill={"#999999"}>{change}</text>
+                        <text x={x} y={y} textAnchor={"end"} fontSize={(2 * props.values.rowHeight) / 3} fill={"#999999"}>{change}</text>
                     )
                 }
             )}

@@ -10,21 +10,13 @@ function TopLine(props) {
                         return (
                             <Bell
                                 bell={bell}
-                                rowPad={props.rowPad}
+                                values={props.values}
                                 rowNum={1}
-                                rowHeight={props.rowHeight}
-                                columnPad={props.columnPad}
                                 col={props.col}
-                                columnWidth={props.columnWidth}
                             />
                         )
                     }
                 )}
-                {/*<polyline*/}
-                {/*    points={props.x1 + ", " + props.y + " " + props.x2 + ", " + props.y}*/}
-                {/*    stroke={"black"}*/}
-                {/*    strokeWidth={"2"}*/}
-                {/*/>*/}
             </>
         )
     }

@@ -1,8 +1,8 @@
 import React from "react";
 
 function Bell(props)  {
-    let y = props.rowPad + (props.rowNum * props.rowHeight)
-    let x = props.columnPad + props.col + (props.bell.bellPos * props.columnWidth)
+    let y = props.values.rowPad + (props.rowNum * props.values.rowHeight)
+    let x = props.values.columnPad + props.col + (props.bell.bellPos * props.values.columnWidth)
     let b = props.bell.bell
     if (props.bell.bellNum === 1) {
         return (
