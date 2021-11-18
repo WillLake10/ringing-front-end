@@ -47,7 +47,7 @@ class Blueline extends React.Component {
             const rowHeight = 17
             const columnWidth = 10
             const rowPad = 20
-            const columnPad = 40
+            const columnPad = 60
             let j = 1
             let rowNum = 1
             let columnSpace = (stage * columnWidth) + 30
@@ -59,6 +59,7 @@ class Blueline extends React.Component {
             let lastB = ""
             let lastT2 = ""
             let lastB2 = ""
+            let changeRow = 0
             let lastRow = this.props.positions.plainCourse[this.props.positions.plainCourse.length - 1].rows[this.props.method.lengthOfLead - 1]
             const leadsPerCol = () => {
                 let colPerPageRem = this.state.width % columnSpace
@@ -105,42 +106,43 @@ class Blueline extends React.Component {
                                         columnWidth={columnWidth}
                                     />
                                     <circle
-                                        cx={columnPad + col + ((1.35 + stage) * columnWidth)-3}
-                                        cy={rowPad + ((rowNum + 0.95) * rowHeight) - (rowHeight*1.3)}
+                                        cx={columnPad + col + ((1.35 + stage) * columnWidth) - 3}
+                                        cy={rowPad + ((rowNum + 0.95) * rowHeight) - (rowHeight * 1.3)}
                                         r={(rowHeight) / 2}
                                         stroke={"blue"}
                                         strokeWidth={"2"}
                                         fill={"none"}
                                     />
                                     <text
-                                        x={columnPad + col + ((1+stage) * columnWidth)-3}
-                                        y={rowPad + (rowNum * rowHeight) - ((rowHeight)/10)}
-                                        fontSize={(2*rowHeight) / 3}
+                                        x={columnPad + col + ((1 + stage) * columnWidth) - 3}
+                                        y={rowPad + (rowNum * rowHeight) - ((rowHeight) / 10)}
+                                        fontSize={(2 * rowHeight) / 3}
                                     >
-                                        {lastRow.row.map(
-                                            bell => {
-                                                if (bell.bellNum === 2){
-                                                    if (bell.bellPos < 9) {
-                                                        return bell.bellPos + 1
-                                                    } else if (bell.bellPos === 9){
-                                                        return "0"
-                                                    }else if (bell.bellPos === 10){
-                                                        return "E"
-                                                    }else if (bell.bellPos === 11){
-                                                        return "T"
-                                                    }else if (bell.bellPos === 12){
-                                                        return "A"
-                                                    }else if (bell.bellPos === 13){
-                                                        return "B"
-                                                    }else if (bell.bellPos === 14){
-                                                        return "C"
-                                                    }else if (bell.bellPos === 15){
-                                                        return "D"
+                                        {
+                                            lastRow.row.map(
+                                                bell => {
+                                                    if (bell.bellNum === 2) {
+                                                        if (bell.bellPos < 9) {
+                                                            return bell.bellPos + 1
+                                                        } else if (bell.bellPos === 9) {
+                                                            return "0"
+                                                        } else if (bell.bellPos === 10) {
+                                                            return "E"
+                                                        } else if (bell.bellPos === 11) {
+                                                            return "T"
+                                                        } else if (bell.bellPos === 12) {
+                                                            return "A"
+                                                        } else if (bell.bellPos === 13) {
+                                                            return "B"
+                                                        } else if (bell.bellPos === 14) {
+                                                            return "C"
+                                                        } else if (bell.bellPos === 15) {
+                                                            return "D"
+                                                        }
                                                     }
+                                                    return null
                                                 }
-                                                return null
-                                            }
-                                        )}
+                                            )}
                                     </text>
                                     {lead.rows.map(
                                         row => {
@@ -196,6 +198,18 @@ class Blueline extends React.Component {
                             )
                         }
                     )}
+                    {
+                        this.props.method.notation.split(".").map(
+                            change => {
+                                changeRow++
+                                let y = rowPad + (changeRow * rowHeight) + ((rowHeight)/3)
+                                let x = columnPad - (columnWidth/2)
+                                return (
+                                    <text x={x} y={y} textAnchor={"end"} fontSize={(2 * rowHeight) / 3} fill={"#999999"}>{change}</text>
+                                )
+                            }
+                        )
+                    }
                 </svg>
             )
         }
